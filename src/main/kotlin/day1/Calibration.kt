@@ -1,3 +1,5 @@
+package day1
+
 import java.nio.file.Files
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.Path

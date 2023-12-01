@@ -1,3 +1,5 @@
+package day1
+
 import java.nio.file.Files
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.Path
@@ -36,7 +38,6 @@ fun main() {
             }
 
             counter += (realFirstDigit + realLastDigit).toInt()
-            println("$line: ${(realFirstDigit + realLastDigit).toInt()}")
         }
     }
     println(counter)
