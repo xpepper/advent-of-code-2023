@@ -1,9 +1,7 @@
 package day1
 
 import streamFile
-import kotlin.io.path.ExperimentalPathApi
 
-@ExperimentalPathApi
 fun main() {
     streamFile("/calibration.txt") { stream ->
         var counter = 0
