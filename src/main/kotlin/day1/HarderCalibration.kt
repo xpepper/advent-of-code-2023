@@ -10,7 +10,6 @@ fun main() {
         stream.forEach { line ->
             val firstDigit = firstDigitFrom(line)
             val lastDigit = lastDigitFrom(line)
-
             counter += (firstDigit + lastDigit).toInt()
         }
         println(counter)
