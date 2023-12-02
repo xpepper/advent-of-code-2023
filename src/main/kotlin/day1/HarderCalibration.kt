@@ -1,46 +1,52 @@
 package day1
 
-import java.nio.file.Files
+import streamFile
 import kotlin.io.path.ExperimentalPathApi
-import kotlin.io.path.Path
 
 @ExperimentalPathApi
 fun main() {
-    val url = {}.javaClass.getResource("/calibration.txt")
-    val path = Path(url.path)
-    var counter = 0
-    Files.newBufferedReader(path).use { reader ->
-        reader.lines().forEach { line ->
-            val firstDigit = line.find { it.isDigit() }?.toString()
-            var realFirstDigit = firstDigit
-            val firstDigitAsLetter = digitsAsLetters.map {
-                it to line.indexOf(it)
-            }.filter { it.second >= 0 }.minByOrNull { it.second }
-            if (firstDigitAsLetter != null && firstDigit != null) {
-                if (firstDigitAsLetter.second < line.indexOf(firstDigit))
-                    realFirstDigit = firstDigitAsLetter.first.toDigit().toString()
-            }
-            if (firstDigit == null) {
-                realFirstDigit = firstDigitAsLetter?.first?.toDigit().toString()
-            }
+    streamFile("/calibration.txt") { stream ->
+        var counter = 0
+        stream.forEach { line ->
+            val firstDigit = firstDigitFrom(line)
+            val lastDigit = lastDigitFrom(line)
 
-            val lastDigit = line.reversed().find { it.isDigit() }?.toString() ?: ""
-            var realLastDigit = lastDigit
-            val lastDigitAsLetter = digitsAsLetters.map {
-                it to line.lastIndexOf(it)
-            }.filter { it.second >= 0 }.maxByOrNull { it.second }
-            if (lastDigitAsLetter != null && lastDigit != null) {
-                if (lastDigitAsLetter.second > line.lastIndexOf(lastDigit))
-                    realLastDigit = lastDigitAsLetter.first.toDigit().toString()
-            }
-            if (lastDigit == null) {
-                realLastDigit = lastDigitAsLetter?.first?.toDigit().toString()
-            }
-
-            counter += (realFirstDigit + realLastDigit).toInt()
+            counter += (firstDigit + lastDigit).toInt()
         }
+        println(counter)
     }
-    println(counter)
+}
+
+private fun firstDigitFrom(line: String): String? {
+    val firstDigitAsDigit = line.find { it.isDigit() }?.toString()
+    var firstDigit = firstDigitAsDigit
+    val firstDigitAsLetter = digitsAsLetters.map {
+        it to line.indexOf(it)
+    }.filter { it.second >= 0 }.minByOrNull { it.second }
+    if (firstDigitAsLetter != null && firstDigitAsDigit != null) {
+        if (firstDigitAsLetter.second < line.indexOf(firstDigitAsDigit))
+            firstDigit = firstDigitAsLetter.first.toDigit().toString()
+    }
+    if (firstDigitAsDigit == null) {
+        firstDigit = firstDigitAsLetter?.first?.toDigit().toString()
+    }
+    return firstDigit
+}
+
+private fun lastDigitFrom(line: String): String {
+    val lastDigitAsDigit = line.reversed().find { it.isDigit() }?.toString() ?: ""
+    var lastDigit = lastDigitAsDigit
+    val lastDigitAsLetter = digitsAsLetters.map {
+        it to line.lastIndexOf(it)
+    }.filter { it.second >= 0 }.maxByOrNull { it.second }
+    if (lastDigitAsLetter != null && lastDigitAsDigit != null) {
+        if (lastDigitAsLetter.second > line.lastIndexOf(lastDigitAsDigit))
+            lastDigit = lastDigitAsLetter.first.toDigit().toString()
+    }
+    if (lastDigitAsDigit == null) {
+        lastDigit = lastDigitAsLetter?.first?.toDigit().toString()
+    }
+    return lastDigit
 }
 
 private fun String.toDigit(): Int = when (this) {
