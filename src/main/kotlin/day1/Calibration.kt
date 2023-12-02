@@ -3,7 +3,7 @@ package day1
 import streamFile
 
 fun main() {
-    streamFile("/calibration.txt") { stream ->
+    streamFile("/day01-calibration.txt") { stream ->
         var counter = 0
         stream.forEach { line ->
             val firstDigit = firstDigitFrom(line)
