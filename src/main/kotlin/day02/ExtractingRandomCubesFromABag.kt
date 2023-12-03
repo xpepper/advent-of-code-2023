@@ -16,9 +16,9 @@ fun main() {
         val game = gameRecord.substringAfterLast(":").split(";").map { sample -> countCubesByColor(sample) }
         index + 1 to game
     }
-    val validGamesSum = games.filter { (_, gameStats): Pair<Int, List<Map<CubeColors, Int>>> ->
-        gameStats.all { it.isValidGame() }
-    }.sumOf { (gameNumber, _) -> gameNumber }
+    val validGamesSum =
+        games.filter { (_, gameStats) -> gameStats.all { it.isValidGame() } }
+            .sumOf { (gameNumber, _) -> gameNumber }
 
     println(validGamesSum)
 }
