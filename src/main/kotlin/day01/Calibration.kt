@@ -1,16 +1,19 @@
 package day01
 
 import streamFile
+import java.util.stream.Stream
 
 fun main() {
-    streamFile("/day01-calibration.txt") { stream ->
-        var counter = 0
-        stream.forEach { line ->
-            val firstDigit = firstDigitFrom(line)
-            val lastDigit = lastDigitFrom(line)
-            counter += (firstDigit + lastDigit).toInt()
+    streamFile("/day01-calibration.txt") { stream: Stream<String> ->
+        var sum = 0
+        stream.use {
+            it.forEach { line: String ->
+                val firstDigit = firstDigitFrom(line)
+                val lastDigit = lastDigitFrom(line)
+                sum += (firstDigit + lastDigit).toInt()
+            }
         }
-        println(counter)
+        println(sum)
     }
 }
 
