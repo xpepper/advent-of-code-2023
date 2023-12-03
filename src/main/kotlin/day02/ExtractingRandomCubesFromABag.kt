@@ -1,13 +1,13 @@
 package day02
 
-import day02.CubeColors.Blue
-import day02.CubeColors.Green
-import day02.CubeColors.Red
+import day02.CubeColor.Blue
+import day02.CubeColor.Green
+import day02.CubeColor.Red
 import java.util.Locale
 
 private val bagConfiguration = mapOf(Red to 12, Green to 13, Blue to 14)
 
-enum class CubeColors { Red, Green, Blue }
+enum class CubeColor { Red, Green, Blue }
 
 // which games would have been possible if the bag contained only
 // 12 red cubes, 13 green cubes, and 14 blue cubes?
@@ -22,19 +22,19 @@ fun main() {
     println(validGamesSum)
 }
 
-private fun Map<CubeColors, Int>.isValidGame() =
+private fun Map<CubeColor, Int>.isValidGame() =
     getOrDefault(Red, 0) <= bagConfiguration.getOrDefault(Red, 0) &&
             getOrDefault(Green, 0) <= bagConfiguration.getOrDefault(Green, 0) &&
             getOrDefault(Blue, 0) <= bagConfiguration.getOrDefault(Blue, 0)
 
-private fun countCubesByColor(sample: String): Map<CubeColors, Int> {
+private fun countCubesByColor(sample: String): Map<CubeColor, Int> {
     // sample: 5 blue, 4 red, 13 green
-    val cubeCountedByColor = mutableMapOf<CubeColors, Int>()
+    val cubeCountedByColor = mutableMapOf<CubeColor, Int>()
     val regex = Regex("(\\d+)\\s+(\\w+)")
     regex.findAll(sample).forEach { matchResult ->
         val count = matchResult.groupValues[1].toInt()
         val color = matchResult.groupValues[2]
-        cubeCountedByColor[CubeColors.valueOf(color.capitalize())] = count
+        cubeCountedByColor[CubeColor.valueOf(color.capitalize())] = count
     }
     return cubeCountedByColor
 }
