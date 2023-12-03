@@ -17,6 +17,6 @@ fun main() {
     }
 }
 
-private fun lastDigitFrom(line: String) = line.reversed().find { it.isDigit() }?.toString() ?: ""
-
 private fun firstDigitFrom(line: String) = line.find { it.isDigit() }?.toString() ?: ""
+
+private fun lastDigitFrom(line: String) = line.reversed().find { it.isDigit() }?.toString() ?: ""
