@@ -8,12 +8,15 @@ fun main() {
         gameRecord.substringAfterLast(":").split(";").map { sample -> countCubesByColor(sample) }
     }
     val sum = games.map { gameStats ->
-        gameStats.flatMap { it.entries }
-            .groupBy({ it.key }, { it.value })
-            .mapValues { (_, values) -> values.max() }
+        fewestNumberOfCubesOfEachColor(gameStats)
     }
         .map { it.values }
-        .sumOf { it.reduce { acc, i -> acc * i } }
+        .sumOf { it.reduce { acc, eachValue -> acc * eachValue } }
 
     println(sum)
 }
+
+private fun fewestNumberOfCubesOfEachColor(gameStats: List<Map<CubeColor, Int>>) =
+    gameStats.flatMap { it.entries }
+        .groupBy({ it.key }, { it.value })
+        .mapValues { (_, values) -> values.max() }
