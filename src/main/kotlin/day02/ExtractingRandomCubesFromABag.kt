@@ -5,39 +5,30 @@ import day02.CubeColors.Green
 import day02.CubeColors.Red
 import java.util.Locale
 
-fun main() {
-    // which games would have been possible if the bag contained only
-    // 12 red cubes, 13 green cubes, and 14 blue cubes?
-    val gameRecords = listOf(
-        "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
-        "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue",
-        "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red",
-        "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red",
-        "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"
-    )
-
-    val bagConfiguration = mapOf(Red to 12, Green to 13, Blue to 14)
-    val games = gameRecords.mapIndexed { index, gameRecord ->
-        val game = gameRecord.substringAfterLast(":").split(";").map { sample ->
-            countCubesByColor(sample)
-        }
-        index + 1 to game
-    }
-    val validGamesSum = games.filter { (_, gameStats): Pair<Int, List<Map<CubeColors, Int>>> ->
-        gameStats.all {
-            it.getOrDefault(Red, 0) < bagConfiguration.getOrDefault(Red, 0) &&
-                    it.getOrDefault(Green, 0) < bagConfiguration.getOrDefault(Green, 0) &&
-                    it.getOrDefault(Blue, 0) < bagConfiguration.getOrDefault(Blue, 0)
-        }
-    }.sumOf { (gameNumber, _) -> gameNumber }
-
-    // the only possible games are 1, 2, and 5
-    println(validGamesSum)
-}
+private val bagConfiguration = mapOf(Red to 12, Green to 13, Blue to 14)
 
 enum class CubeColors { Red, Green, Blue }
 
-fun countCubesByColor(sample: String): Map<CubeColors, Int> {
+// which games would have been possible if the bag contained only
+// 12 red cubes, 13 green cubes, and 14 blue cubes?
+fun main() {
+    val games = gameRecords.mapIndexed { index, gameRecord ->
+        val game = gameRecord.substringAfterLast(":").split(";").map { sample -> countCubesByColor(sample) }
+        index + 1 to game
+    }
+    val validGamesSum = games.filter { (_, gameStats): Pair<Int, List<Map<CubeColors, Int>>> ->
+        gameStats.all { it.isValidGame() }
+    }.sumOf { (gameNumber, _) -> gameNumber }
+
+    println(validGamesSum)
+}
+
+private fun Map<CubeColors, Int>.isValidGame() =
+    getOrDefault(Red, 0) <= bagConfiguration.getOrDefault(Red, 0) &&
+            getOrDefault(Green, 0) <= bagConfiguration.getOrDefault(Green, 0) &&
+            getOrDefault(Blue, 0) <= bagConfiguration.getOrDefault(Blue, 0)
+
+private fun countCubesByColor(sample: String): Map<CubeColors, Int> {
     // sample: 5 blue, 4 red, 13 green
     val cubeCountedByColor = mutableMapOf<CubeColors, Int>()
     val regex = Regex("(\\d+)\\s+(\\w+)")
