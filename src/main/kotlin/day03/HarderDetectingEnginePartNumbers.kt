@@ -1,21 +1,9 @@
 package day03
 
-private const val max_index = 9
+private const val max_index = 139
 
 fun main() {
     // a 140x140 matrix
-    val engineSchemata = listOf(
-        "467..114..",
-        "...*......",
-        "..35..633.",
-        "......#...",
-        "617*......",
-        ".....+.58.",
-        "..592.....",
-        "......755.",
-        "...$.*....",
-        ".664.598.."
-    )
     val charArrays = engineSchemata.map { it.toCharArray() }
 
     val numbers = mutableListOf<Int>()
@@ -31,9 +19,9 @@ fun main() {
                     detectNumberIn(charArrays[i - 1], j).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
                         }
                     }
                 }
@@ -42,9 +30,9 @@ fun main() {
                     detectNumberIn(charArrays[i - 1], j - 1).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
 
                         }
                     }
@@ -54,9 +42,9 @@ fun main() {
                     detectNumberIn(charArrays[i - 1], j + 1).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
 
                         }
                     }
@@ -68,9 +56,9 @@ fun main() {
                     detectNumberIn(charArrays[i], j - 1).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
 
                         }
                     }
@@ -80,9 +68,9 @@ fun main() {
                     detectNumberIn(charArrays[i], j + 1).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
 
                         }
                     }
@@ -94,9 +82,9 @@ fun main() {
                     detectNumberIn(charArrays[i + 1], j).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
 
                         }
                     }
@@ -106,9 +94,9 @@ fun main() {
                     detectNumberIn(charArrays[i + 1], j - 1).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
 
                         }
                     }
@@ -118,9 +106,9 @@ fun main() {
                     detectNumberIn(charArrays[i + 1], j + 1).let {
                         if (numbers.lastOrNull() != it) {
                             numbers.add(it)
-                            val orDefault = gearNumbers.getOrDefault(i to j, mutableListOf())
-                            orDefault.add(it)
-                            gearNumbers[i to j] = orDefault
+                            val candidateGears = gearNumbers.getOrDefault(i to j, mutableListOf())
+                            candidateGears.add(it)
+                            gearNumbers[i to j] = candidateGears
                         }
                     }
                 }
