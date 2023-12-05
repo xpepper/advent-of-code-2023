@@ -71,7 +71,7 @@ fun main() {
     println(numbers.sum())
 }
 
-fun detectNumberIn(charArrays: CharArray, col: Int): Int {
+private fun detectNumberIn(charArrays: CharArray, col: Int): Int {
     val stringBuilder = StringBuilder()
 
     var j = col
