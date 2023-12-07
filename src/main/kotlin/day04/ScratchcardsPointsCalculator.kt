@@ -3,7 +3,7 @@ package day04
 import kotlin.math.pow
 
 fun main() {
-    scratchcards.sumOf { row ->
+    rawScratchcards.sumOf { row ->
         val (winningNumbers, myNumbers) = row.split(":")[1].trim().split("|")
             .map { it.split(" ").filterNot(String::isBlank).map(String::toInt) }
 
