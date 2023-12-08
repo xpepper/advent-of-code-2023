@@ -13,16 +13,17 @@ private val seeds =
 
 
 fun main() {
+    val allMaps = listOf(
+        seedToSoilMap,
+        soilToFertilizerMap,
+        fertilizerToWaterMap,
+        waterToLightMap,
+        lightToTemperatureMap,
+        temperatureToHumidityMap,
+        humidityToLocationMap
+    )
     seeds.mapIndexed { index, seed ->
-        val seedToSoil = mapper(seedToSoilMap, seed)
-        val soilToFertilizer = mapper(soilToFertilizerMap, seedToSoil)
-        val fertilizerToWater = mapper(fertilizerToWaterMap, soilToFertilizer)
-        val waterToLight = mapper(waterToLightMap, fertilizerToWater)
-        val lightToTemperature = mapper(lightToTemperatureMap, waterToLight)
-        val temperatureToHumidity = mapper(temperatureToHumidityMap, lightToTemperature)
-        val humidityToLocation = mapper(humidityToLocationMap, temperatureToHumidity)
-        println("$seed => $humidityToLocation")
-        index to humidityToLocation
+        index to allMaps.fold(seed) { acc: Long, conversionMaps -> mapper(conversionMaps, acc) }
     }
         .minBy { (_, location) -> location }
         .also { (index, location) ->
