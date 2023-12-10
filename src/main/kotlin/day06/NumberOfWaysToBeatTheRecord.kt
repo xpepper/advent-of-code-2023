@@ -9,14 +9,11 @@ fun main() {
     val (times, distances) = puzzleInput.split("\n")
         .map { it.split(":")[1].trim().split(Regex("\\s+")).map(String::toInt) }
     times.zip(distances).map { (raceTime, raceRecord) ->
-        var counter = 0
-        for (chargeTime in 0..raceTime) {
+        (0..raceTime).fold(0) { counter, chargeTime ->
             if (((raceTime - chargeTime) * chargeTime) > raceRecord) {
-                counter++
-            }
-        }
-        println("Record beaten $counter times")
-        counter
+                counter + 1
+            } else counter
+        }.also { println("Record beaten $it times") }
     }.product().also(::println)
 }
 
