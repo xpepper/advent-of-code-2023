@@ -1,8 +1,8 @@
 package day06
 
 private val puzzleInput = """
-    Time:      7  15   30
-    Distance:  9  40  200
+Time:        59     70     78     78
+Distance:   430   1218   1213   1276
 """.trimIndent()
 
 fun main() {
