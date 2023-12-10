@@ -6,6 +6,11 @@ Distance:   430   1218   1213   1276
 """.trimIndent()
 
 fun main() {
+    partOne()
+    partTwo()
+}
+
+private fun partOne() {
     val (times, distances) = puzzleInput.split("\n")
         .map { it.split(":")[1].trim().split(Regex("\\s+")).map(String::toInt) }
     times.zip(distances).map { (raceTime, raceRecord) ->
@@ -15,6 +20,16 @@ fun main() {
             } else counter
         }.also { println("Record beaten $it times") }
     }.product().also(::println)
+}
+
+private fun partTwo() {
+    val (raceTime, raceRecord) = puzzleInput.trimIndent().split("\n")
+        .map { it.split(":")[1].trim().split(Regex("\\s+")).joinToString("") }.map(String::toLong)
+    (0..raceTime).fold(0) { counter, chargeTime ->
+        if (((raceTime - chargeTime) * chargeTime) > raceRecord) {
+            counter + 1
+        } else counter
+    }.also(::println)
 }
 
 private fun Iterable<Int>.product(): Int = fold(1) { acc, i -> acc * i }
