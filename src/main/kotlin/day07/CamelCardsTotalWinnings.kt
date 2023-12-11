@@ -42,13 +42,15 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
     private fun type(): Int {
         return when {
             isFiveOfAKind() -> 7
-            isFullHouse() -> 6
+            isFourOfAKind() -> 6
+            isFullHouse() -> 5
             else -> 1
         }
     }
 
     private fun isFiveOfAKind(): Boolean = cards.groupBy { it.label }.size == 1
-    private fun isFullHouse(): Boolean = cards.groupBy { it.label }.size == 2
+    private fun isFourOfAKind(): Boolean = cards.groupBy { it.label }.any { it.value.size == 4 }
+    private fun isFullHouse(): Boolean = cards.groupBy { it.label }.any { it.value.size == 3 }
 
     private fun compareByStrongest(hand: Hand, other: Hand): Int {
         return Random(System.currentTimeMillis()).nextInt()
