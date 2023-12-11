@@ -39,13 +39,11 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
         else -> compareByStrongest(this, other)
     }
 
-    private fun type(): Int {
-        return when {
-            isFiveOfAKind() -> 7
-            isFourOfAKind() -> 6
-            isFullHouse() -> 5
-            else -> 1
-        }
+    private fun type(): Int = when {
+        isFiveOfAKind() -> 7
+        isFourOfAKind() -> 6
+        isFullHouse() -> 5
+        else -> 1
     }
 
     private fun isFiveOfAKind(): Boolean = cards.groupBy { it.label }.countWithSize(5) == 1
