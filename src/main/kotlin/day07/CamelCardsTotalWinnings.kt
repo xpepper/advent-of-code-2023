@@ -48,12 +48,15 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
         }
     }
 
-    private fun isFiveOfAKind(): Boolean = cards.groupBy { it.label }.count { (_, group) -> group.size == 5 } == 1
-    private fun isFourOfAKind(): Boolean = cards.groupBy { it.label }.count { (_, group) -> group.size == 4 } == 1
+    private fun isFiveOfAKind(): Boolean = cards.groupBy { it.label }.countWithSize(5) == 1
+    private fun isFourOfAKind(): Boolean = cards.groupBy { it.label }.countWithSize(4) == 1
     private fun isFullHouse(): Boolean {
         val groups = cards.groupBy { it.label }
-        return (groups.count { (_, group) -> group.size == 3 } == 1) && groups.size == 2
+        return groups.countWithSize(3) == 1 && groups.size == 2
     }
+
+    private fun Map<String, List<Card>>.countWithSize(size: Int) =
+        count { (_, group) -> group.size == size }
 
     private fun compareByStrongest(hand: Hand, other: Hand): Int {
         TODO()
