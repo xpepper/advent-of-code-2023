@@ -78,9 +78,7 @@ enum class Card(val label: String, val value: Int) {
     TWO("2", 2);
 
     companion object {
-        fun from(label: String): Card {
-            return entries.find { it.label == label } ?: throw InvalidCard(label)
-        }
+        fun from(label: String): Card = entries.find { it.label == label } ?: throw InvalidCard(label)
     }
 
     data class InvalidCard(val label: String) : RuntimeException("Invalid card with label $label")
