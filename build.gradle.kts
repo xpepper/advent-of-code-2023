@@ -10,12 +10,15 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
+    testImplementation(platform("io.kotest:kotest-bom:5.8.0"))
+    testImplementation("io.kotest", "kotest-assertions-core")
 }
 
-tasks.test {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(17)
 }
