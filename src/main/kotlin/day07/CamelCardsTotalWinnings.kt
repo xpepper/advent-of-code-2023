@@ -47,7 +47,7 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
         isTwoPairs() -> 3
         isOnePair() -> 2
         isHighCard() -> 1
-        else -> 0
+        else -> throw UnknownType(this)
     }
 
     private fun isFiveOfAKind() = labelGroups.countWithSize(5) == 1
@@ -67,6 +67,8 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
         TODO()
         return Random(System.currentTimeMillis()).nextInt()
     }
+    data class UnknownType(val hand: Hand) : RuntimeException("Invalid type for hand $hand")
+
 }
 
 enum class Card(val label: String, val value: Int) {
