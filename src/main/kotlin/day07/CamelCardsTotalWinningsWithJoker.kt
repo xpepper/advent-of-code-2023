@@ -49,19 +49,15 @@ class PartTwo {
             return labelGroups.countWithSize(4) == 1 && labelGroups.size == 2
         }
 
-        private fun cards(): List<Card> {
-            val targetCard =
-                cards.asSequence()
-                    .filterNot { it == J }
-                    .groupBy { it.label }
-                    .map { it.value }
-                    .maxByOrNull { it.size }
-                    ?.first()
-            if (targetCard != null) {
-                return cards.map { card -> if (card == J) targetCard else card }
-            }
-            return cards
-        }
+        private fun cards(): List<Card> = cards.asSequence()
+            .filterNot { it == J }
+            .groupBy { it.label }
+            .map { it.value }
+            .maxByOrNull { it.size }
+            ?.first()
+            ?.let { applyJokerRuleOn(it) } ?: cards
+
+        private fun applyJokerRuleOn(targetCard: Card) = cards.map { card -> if (card == J) targetCard else card }
 
         private fun isFullHouse() = labelGroups.countWithSize(3) == 1 && labelGroups.size == 2
         private fun isThreeOfAKind() = labelGroups.countWithSize(3) == 1 && labelGroups.size == 3
