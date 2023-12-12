@@ -1,4 +1,4 @@
-package day07
+package day07.partone
 
 import day07.PartOne.Card.A
 import day07.PartOne.Card.EIGHT
