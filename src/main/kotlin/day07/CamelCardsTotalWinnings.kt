@@ -44,6 +44,7 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
         isFourOfAKind() -> 6
         isFullHouse() -> 5
         isThreeOfAKind() -> 4
+        isTwoPairs() -> 3
         else -> 1
     }
 
@@ -51,6 +52,7 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
     private fun isFourOfAKind() = labelGroups.countWithSize(4) == 1
     private fun isFullHouse() = labelGroups.countWithSize(3) == 1 && labelGroups.size == 2
     private fun isThreeOfAKind() = labelGroups.countWithSize(3) == 1 && labelGroups.size == 3
+    private fun isTwoPairs() = labelGroups.countWithSize(2) == 2 && labelGroups.size == 3
 
     private val labelGroups by lazy { cards.groupBy { it.label } }
 

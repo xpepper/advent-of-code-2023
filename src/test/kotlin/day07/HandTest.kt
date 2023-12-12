@@ -64,4 +64,15 @@ class HandTest {
         threeOfAKind shouldBeGreaterThan onePair
         threeOfAKind shouldBeGreaterThan highCard
     }
+
+    @Test
+    fun `Two pairs`() {
+        twoPairs shouldBeLessThan fiveOfAKind
+        twoPairs shouldBeLessThan fourOfAKind
+        twoPairs shouldBeLessThan fullHouse
+        twoPairs shouldBeLessThan threeOfAKind
+
+        twoPairs shouldBeGreaterThan onePair
+        twoPairs shouldBeGreaterThan highCard
+    }
 }
