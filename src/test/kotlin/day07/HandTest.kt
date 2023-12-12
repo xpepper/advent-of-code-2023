@@ -13,36 +13,44 @@ import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.comparables.shouldBeLessThan
 import org.junit.jupiter.api.Test
 
+private val fiveOfAKind = Hand(A, A, A, A, A)
+private val fourOfAKind = Hand(A, A, EIGHT, A, A)
+private val fullHouse = Hand(TWO, THREE, THREE, THREE, TWO)
+private val threeOfAKind = Hand(T, T, T, NINE, EIGHT)
+private val twoPairs = Hand(TWO, THREE, FOUR, THREE, TWO)
+private val onePair = Hand(A, TWO, THREE, A, FOUR)
+private val highCard = Hand(TWO, THREE, FOUR, FIVE, SIX)
+
 class HandTest {
     @Test
     fun `Five of a kind`() {
-        Hand(A, A, A, A, A) shouldBeGreaterThan Hand(A, A, EIGHT, A, A) // Four of a kind
-        Hand(A, A, A, A, A) shouldBeGreaterThan Hand(TWO, THREE, THREE, THREE, TWO) // Full house
-        Hand(A, A, A, A, A) shouldBeGreaterThan Hand(T, T, T, NINE, EIGHT) // Three of a kind
-        Hand(A, A, A, A, A) shouldBeGreaterThan Hand(TWO, THREE, FOUR, THREE, TWO) // Two pair
-        Hand(A, A, A, A, A) shouldBeGreaterThan Hand(A, TWO, THREE, A, FOUR) // One pair
-        Hand(A, A, A, A, A) shouldBeGreaterThan Hand(TWO, THREE, FOUR, FIVE, SIX) // High card
+        fiveOfAKind shouldBeGreaterThan fourOfAKind
+        fiveOfAKind shouldBeGreaterThan fullHouse
+        fiveOfAKind shouldBeGreaterThan threeOfAKind
+        fiveOfAKind shouldBeGreaterThan twoPairs
+        fiveOfAKind shouldBeGreaterThan onePair
+        fiveOfAKind shouldBeGreaterThan highCard
     }
 
     @Test
     fun `Four of a kind`() {
-        Hand(A, A, EIGHT, A, A) shouldBeLessThan Hand(A, A, A, A, A) // Five of a kind
+        fourOfAKind shouldBeLessThan fiveOfAKind
 
-        Hand(A, A, EIGHT, A, A) shouldBeGreaterThan Hand(TWO, THREE, THREE, THREE, TWO) // Full House
-        Hand(A, A, EIGHT, A, A) shouldBeGreaterThan Hand(T, T, T, NINE, EIGHT) // Three of a kind
-        Hand(A, A, EIGHT, A, A) shouldBeGreaterThan Hand(TWO, THREE, FOUR, THREE, TWO) // Two pair
-        Hand(A, A, EIGHT, A, A) shouldBeGreaterThan Hand(A, TWO, THREE, A, FOUR) // One pair
-        Hand(A, A, EIGHT, A, A) shouldBeGreaterThan Hand(TWO, THREE, FOUR, FIVE, SIX) // High card
+        fourOfAKind shouldBeGreaterThan fullHouse
+        fourOfAKind shouldBeGreaterThan threeOfAKind
+        fourOfAKind shouldBeGreaterThan twoPairs
+        fourOfAKind shouldBeGreaterThan onePair
+        fourOfAKind shouldBeGreaterThan highCard
     }
 
     @Test
     fun `Full house`() {
-        Hand(TWO, THREE, THREE, THREE, TWO) shouldBeLessThan Hand(A, A, A, A, A) // Five of a kind
-        Hand(TWO, THREE, THREE, THREE, TWO) shouldBeLessThan Hand(A, A, EIGHT, A, A) // Four of a kind
+        fullHouse shouldBeLessThan fiveOfAKind
+        fullHouse shouldBeLessThan fourOfAKind
 
-        Hand(TWO, THREE, THREE, THREE, TWO) shouldBeGreaterThan Hand(T, T, T, NINE, EIGHT) // Three of a kind
-        Hand(TWO, THREE, THREE, THREE, TWO) shouldBeGreaterThan Hand(TWO, THREE, FOUR, THREE, TWO) // Two pair
-        Hand(TWO, THREE, THREE, THREE, TWO) shouldBeGreaterThan Hand(A, TWO, THREE, A, FOUR) // One pair
-        Hand(TWO, THREE, THREE, THREE, TWO) shouldBeGreaterThan Hand(TWO, THREE, FOUR, FIVE, SIX) // High card
+        fullHouse shouldBeGreaterThan threeOfAKind
+        fullHouse shouldBeGreaterThan twoPairs
+        fullHouse shouldBeGreaterThan onePair
+        fullHouse shouldBeGreaterThan highCard
     }
 }
