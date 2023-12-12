@@ -1004,8 +1004,8 @@ Q3QQ5 24
 """.trimIndent()
 
 fun main() {
-    var totalWinnings = 0;
     handsAndBids.split("\n")
+        .asSequence()
         .map { it.split(" ") }
         .map { (hand, bid) ->
             HandAndBid(
@@ -1014,8 +1014,9 @@ fun main() {
             )
         }
         .sortedBy { it.hand }
-        .forEachIndexed { index, handAndBid -> totalWinnings += (index + 1) * handAndBid.bid }
-        .also { println(totalWinnings) }
+        .mapIndexed { index, handAndBid -> (index + 1) * handAndBid.bid }
+        .sum()
+        .also(::println)
 }
 
 data class HandAndBid(val hand: Hand, val bid: Int)
