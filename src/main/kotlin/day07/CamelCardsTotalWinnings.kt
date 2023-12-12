@@ -1,7 +1,5 @@
 package day07
 
-import kotlin.random.Random
-
 val handsAndBids = """
     32T3K 765
     T55J5 684
@@ -51,7 +49,7 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
     }
 
     private fun isFiveOfAKind() = labelGroups.countWithSize(5) == 1
-    private fun isFourOfAKind() = labelGroups.countWithSize(4) == 1  && labelGroups.size == 2
+    private fun isFourOfAKind() = labelGroups.countWithSize(4) == 1 && labelGroups.size == 2
     private fun isFullHouse() = labelGroups.countWithSize(3) == 1 && labelGroups.size == 2
     private fun isThreeOfAKind() = labelGroups.countWithSize(3) == 1 && labelGroups.size == 3
     private fun isTwoPairs() = labelGroups.countWithSize(2) == 2 && labelGroups.size == 3
@@ -63,12 +61,16 @@ data class Hand(val cards: List<Card>) : Comparable<Hand> {
     private fun Map<String, List<Card>>.countWithSize(size: Int) =
         count { (_, group) -> group.size == size }
 
-    private fun compareByStrongest(hand: Hand, other: Hand): Int {
-        TODO()
-        return Random(System.currentTimeMillis()).nextInt()
+    private fun compareByStrongest(hand: Hand, otherHand: Hand): Int {
+        for (i in 0..<5) {
+            if (hand.cards[i].value > otherHand.cards[i].value) return 1
+            if (hand.cards[i].value < otherHand.cards[i].value) return -1
+        }
+        throw HandsAreTie(hand, otherHand)
     }
-    data class UnknownType(val hand: Hand) : RuntimeException("Invalid type for hand $hand")
 
+    data class UnknownType(val hand: Hand) : RuntimeException("Invalid type for hand $hand")
+    data class HandsAreTie(val hand: Hand, val otherHand: Hand) : RuntimeException("$hand and $otherHand are tie!")
 }
 
 enum class Card(val label: String, val value: Int) {

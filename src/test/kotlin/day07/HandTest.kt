@@ -4,7 +4,9 @@ import day07.Card.A
 import day07.Card.EIGHT
 import day07.Card.FIVE
 import day07.Card.FOUR
+import day07.Card.J
 import day07.Card.NINE
+import day07.Card.SEVEN
 import day07.Card.SIX
 import day07.Card.T
 import day07.Card.THREE
@@ -95,5 +97,29 @@ class HandTest {
         highCard shouldBeLessThan threeOfAKind
         highCard shouldBeLessThan twoPairs
         highCard shouldBeLessThan onePair
+    }
+
+    @Test
+    fun `highest card win when comparing two hands of the same type`() {
+        Hand(J, J, J, J, J) shouldBeGreaterThan Hand(NINE, NINE, NINE, NINE, NINE)
+        Hand(J, J, J, J, J) shouldBeLessThan Hand(A, A, A, A, A)
+
+        Hand(NINE, NINE, EIGHT, NINE, NINE) shouldBeGreaterThan Hand(TWO, TWO, EIGHT, TWO, TWO)
+        Hand(NINE, NINE, EIGHT, NINE, NINE) shouldBeLessThan Hand(A, A, EIGHT, A, A)
+
+        Hand(TWO, J, J, J, TWO) shouldBeGreaterThan Hand(TWO, THREE, THREE, THREE, TWO)
+        Hand(TWO, J, J, J, TWO) shouldBeLessThan Hand(TWO, A, A, A, TWO)
+
+        Hand(T, T, T, NINE, EIGHT) shouldBeGreaterThan Hand(T, T, T, FOUR, EIGHT)
+        Hand(T, T, T, NINE, EIGHT) shouldBeLessThan Hand(A, A, A, NINE, EIGHT)
+
+        Hand(NINE, THREE, FOUR, THREE, NINE) shouldBeGreaterThan Hand(TWO, THREE, FOUR, THREE, TWO)
+        Hand(TWO, J, FOUR, J, TWO) shouldBeLessThan Hand(T, THREE, FOUR, THREE, T)
+
+        Hand(A, TWO, THREE, A, FOUR) shouldBeGreaterThan Hand(T, TWO, THREE, T, FOUR)
+        Hand(A, TWO, THREE, A, FOUR) shouldBeLessThan Hand(A, TWO, THREE, A, FIVE)
+
+        Hand(THREE, FOUR, FIVE, SIX, SEVEN) shouldBeGreaterThan Hand(TWO, THREE, FOUR, FIVE, SIX)
+        Hand(THREE, FOUR, FIVE, SIX, SEVEN) shouldBeLessThan Hand(FOUR, FIVE, SIX, SEVEN, EIGHT)
     }
 }
