@@ -800,19 +800,17 @@ fun main() {
         .map { it.split("=") }
         .associate { (node, nextNodes) -> node.trim() to nextNodes.trim() }
     var currentNode = "AAA"
-    var i = 0
-    var steps: Long = 0
+    var steps = 0
     do {
-        steps++
-        if (steps % 1_000 == 0L) print(".")
-        val turnInstruction = turningInstructions[i]
+        if (steps % 1_000 == 0) print(".")
+        val turnInstruction = turningInstructions[steps % turningInstructions.length]
         val (nextLeftNode, nextRightNode) = nodeMap[currentNode]?.split(",") ?: throw InvalidNodeMap(nodeMap[currentNode])
         when (turnInstruction) {
             'R' -> currentNode = nextRightNode.trim().dropLast(1)
             'L' -> currentNode = nextLeftNode.trim().drop(1)
         }
 
-        i = (i + 1) % turningInstructions.length
+        steps++
     } while (currentNode != "ZZZ")
     println(steps)
 }
