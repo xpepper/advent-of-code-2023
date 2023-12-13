@@ -804,14 +804,17 @@ fun main() {
     var steps: Long = 0
     do {
         steps++
-        if (steps % 100_000 == 0L) print(".")
+        if (steps % 1_000 == 0L) print(".")
         val turnInstruction = turningInstructions[i]
-        if (turnInstruction == 'R')
-            currentNode = nodeMap[currentNode]?.split(",")?.get(1)?.trim()?.replace(")", "") ?: TODO()
-        if (turnInstruction == 'L')
-            currentNode = nodeMap[currentNode]?.split(",")?.get(0)?.trim()?.replace("(", "") ?: TODO()
+        val (nextLeftNode, nextRightNode) = nodeMap[currentNode]?.split(",") ?: throw InvalidNodeMap(nodeMap[currentNode])
+        when (turnInstruction) {
+            'R' -> currentNode = nextRightNode.trim().dropLast(1)
+            'L' -> currentNode = nextLeftNode.trim().drop(1)
+        }
 
         i = (i + 1) % turningInstructions.length
     } while (currentNode != "ZZZ")
     println(steps)
 }
+
+data class InvalidNodeMap(val node: String?) : RuntimeException("invalid node $node")
