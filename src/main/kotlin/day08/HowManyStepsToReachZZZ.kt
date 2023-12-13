@@ -798,16 +798,17 @@ fun main() {
         .asSequence()
         .map(String::trim)
         .map { it.split("=") }
-        .associate { (node, nextNodes) -> node.trim() to nextNodes.trim() }
+        .associate { (node, nextNodes) -> node.trim() to nextNodes.trim().removePrefix("(").removeSuffix(")") }
     var currentNode = "AAA"
     var steps = 0
     do {
         if (steps % 1_000 == 0) print(".")
         val turnInstruction = turningInstructions[steps % turningInstructions.length]
-        val (nextLeftNode, nextRightNode) = nodeMap[currentNode]?.split(",") ?: throw InvalidNodeMap(nodeMap[currentNode])
+        val (nextLeftNode, nextRightNode) = nodeMap[currentNode]?.split(",")
+            ?: throw InvalidNodeMap(nodeMap[currentNode])
         when (turnInstruction) {
-            'R' -> currentNode = nextRightNode.trim().dropLast(1)
-            'L' -> currentNode = nextLeftNode.trim().drop(1)
+            'R' -> currentNode = nextRightNode.trim()
+            'L' -> currentNode = nextLeftNode.trim()
         }
 
         steps++
