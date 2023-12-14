@@ -800,6 +800,7 @@ fun main() {
         .map { it.split("=") }
         .associate { (node, nextNodes) -> node.trim() to nextNodes.trim().removePrefix("(").removeSuffix(")") }
     var currentNodes = nodeMap.keys.filter { it.endsWith("A") }
+    val zPositions = MutableList(currentNodes.size) { 0L }
     var steps = 0
     do {
         val turnInstruction = turningInstructions[steps % turningInstructions.length]
@@ -813,6 +814,54 @@ fun main() {
             }
         }
         steps++
-    } while (currentNodes.any { !it.endsWith("Z") })
-    println(steps)
+
+        val allZIndexes = currentNodes.mapIndexedNotNull { index, node -> if (node.endsWith("Z")) index else null }
+        if (allZIndexes.isNotEmpty()) {
+            allZIndexes.forEach {
+                if (zPositions[it] == 0L) zPositions[it] = steps.toLong()
+                println("found Z for index $it in $steps steps, removing it from the search")
+            }
+            println("Now current nodes to search are $currentNodes")
+        }
+    } while (zPositions.any { it == 0L })
+    zPositions.forEach { println(it) }
+    lcmOfList(zPositions).also(::println)
+    findLCMOfListOfNumbers(zPositions).also(::println)
 }
+
+fun lcmOfList(numbers: List<Long>): Long {
+    var result = numbers[0]
+    for (i in 1 until numbers.size) {
+        result = lcm(result, numbers[i])
+    }
+    return result
+}
+
+fun lcm(a: Long, b: Long): Long {
+    return a * b / gcd(a, b)
+}
+
+fun gcd(a: Long, b: Long): Long {
+    return if (b == 0L) a else gcd(b, a % b)
+}
+
+fun findLCMOfListOfNumbers(numbers: List<Long>): Long {
+    var result = numbers[0]
+    for (i in 1 until numbers.size) {
+        result = findLCM(result, numbers[i])
+    }
+    return result
+}
+fun findLCM(a: Long, b: Long): Long {
+    val larger = if (a > b) a else b
+    val maxLcm = a * b
+    var lcm = larger
+    while (lcm <= maxLcm) {
+        if (lcm % a == 0L && lcm % b == 0L) {
+            return lcm
+        }
+        lcm += larger
+    }
+    return maxLcm
+}
+
